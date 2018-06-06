@@ -1,0 +1,97 @@
+<div class="block-fix">
+<div class="container" ng-controller="mediaController">
+	<ol class="etapier">
+    	<li class="done complete"><span>1</span></li>
+    	<li class="done complete"><span>2</span></li>
+    	<li class="done"><span>3</span></li>
+    	<li class="todo"><span>4</span></li>
+    	<li class="todo"><span>5</span></li>
+	</ol>
+	<div class="content-page">
+        <div class="scn-title content-title">Content</div>
+
+        <form name="contentForm" class="contentForm">
+        	 hi {{settemp}}
+        	<h2 class="form-heading">Pattern Design Details</h2>
+
+        	<div>
+			<label>API Key:</label>
+			<input name="patternapikey" ng-model="mediainfo.pattern_design_api_key" ng-blur="patternkey=true" ng-click="patternkey=false" ng-init="patternkey=true" required>
+			<span class="field-error" ng-show="contentForm.patternapikey.$touched && contentForm.patternapikey.$invalid">The API key is required.
+			</span>
+		    </div>
+			
+			<div>
+			<label>HMAC Key:</label>
+			<input name="patternHmac" ng-model="mediainfo.pattern_design_hmac_key" ng-blur="patternmac=true" ng-click="patternmac=false" ng-init="patternmac=true" required>
+			<span class="field-error" ng-show="contentForm.patternHmac.$touched && contentForm.patternHmac.$invalid">The HMAC key is required.
+			</span>
+		    </div>
+
+		    <h2 class="form-heading">Fotolia Details</h2>
+		    <div>
+			<label>API Key:</label>
+			<input name="fotoliaApi" ng-model="mediainfo.fotolia_api_key" ng-blur="fotokey=true" ng-click="fotokey=false" ng-init="fotokey=true" required>
+			<span class="field-error" ng-show="contentForm.fotoliaApi.$touched && contentForm.fotoliaApi.$invalid">The Fotolia API key is required.
+			</span>
+		    </div>
+		</form>
+
+    </div>
+    <div class="" ng-if="contentForm.$valid && (patternkey && patternmac && fotokey)" ng-init="saveMedia(mediainfo.pattern_design_api_key,mediainfo.pattern_design_hmac_key,mediainfo.fotolia_api_key)"></div>
+    <div class="{{contentForm.$invalid}} media-sku">
+    <form class="sku-opt" name="sku-opt">
+    	<h3>SKU Options</h3>
+            <table class="form-table">
+                <tr class="sku-heading">
+                	<th>SKU</th>
+                	<th>Select/Deselect</th>
+                	<th>Backgrounds imagery</th>
+                	<th>Objects imagery</th>
+                </tr>               
+					<!-- //foreach($data['applications'] as $k => $v) -->
+				<div>
+                <tr ng-repeat="x in items">
+                    <th><label for="">{{x.name}}</label></th>
+                    <td>
+                        <input type="checkbox" name="check-{{x.name}}" id="select-hp" ng-model="x.use" ng-disabled="contentForm.$invalid" ng-click="mediaChange(x)">
+                        <span class="description">Check if you are using {{x.name}}</span>
+                    </td>
+                    <td>
+                        <!-- <select  name="" ng-model="x.bgMedia" ng-disabled="contentForm.$invalid" ng-change="mediaChange(x.bgMedia)">
+                            <option ng-selected="true">Select an option</option>
+                        	<option class="select" ng-repeat="option in optionlist">{{option}}</option>
+                        </select> -->
+                        <div ng-switch on="x.name">
+                        <div ng-switch-when="wallcovering" ng-switch-when-separator=",">
+                            <span ng-model="x.bgMedia" ng-init="x.bgMedia='n/a'"> n/a</span>
+                        </div>
+                        <div ng-switch-when="Roller" ng-switch-when-separator=",">
+                            <span ng-model="x.bgMedia" ng-init="x.bgMedia='n/a'"> n/a</span>
+                        </div>
+                        <div ng-switch-default>
+                            <select  name="" ng-model="x.bgMedia" ng-disabled="contentForm.$invalid" ng-change="mediaChange(x.bgMedia)">
+                            <option ng-selected="true">Select an option</option>
+                            <option class="select" ng-repeat="option in optionlist">{{option}}</option>
+                            </select>
+                        </div>
+                        </div>
+                    </td>
+        
+                    <td>
+                        <select  name="" ng-model="x.fgMedia" ng-disabled="contentForm.$invalid" ng-change="mediaChange(x.fgMedia)">
+                            <option ng-selected="true">Select an option</option>
+                        	<option ng-repeat="option in optionlist">{{option}}</option>
+                        </select>
+                    </td>
+                </tr>
+               </div>
+                
+           </table>
+    </form>
+</div>
+<a class="next-move" click-redirect="/integrate-products"> Prev</a>
+<a class="next-move" click-redirect="/content-list"> Next</a>
+<div style="visibility: hidden;">{{patternapikey + patternHmac + fotoliaApi }}</div>
+</div>
+</div>

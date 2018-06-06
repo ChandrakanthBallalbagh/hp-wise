@@ -1,0 +1,108 @@
+<div class="block-fix">
+<div class="container">
+	<ol class="etapier">
+    	<li class="done"><span>1</span></li>
+    	<li class="todo"><span>2</span></li>
+    	<li class="todo"><span>3</span></li>
+    	<li class="todo"><span>4</span></li>
+    	<li class="todo"><span>5</span></li>
+	</ol>
+	<div class="">
+        <div class="scn-title tech-title">Tech Info</div>
+        <form name="techForm" class="techInfoForm">
+        	 hi {{settemp}}
+        	<h2 class="form-heading">Web Hosting Details</h2>
+        	<div>
+			<label>Host Name:</label>
+			<input name="hostName" ng-model="techinfo.host_name" required>
+			<div class="" ng-hide="techForm.hostName.$touched && techForm.hostName.$invalid" style="visibility: hidden;">vdgvsvfgsvfg</div>
+			<div class="field-error" ng-show="techForm.hostName.$touched && techForm.hostName.$invalid">The host name is required.</div>
+		    </div>
+			
+			<div>
+			<label>Username</label>
+			<input name="userName" ng-model="techinfo.host_username" required>
+			<span class="field-error" ng-show="techForm.userName.$touched && techForm.userName.$invalid">The username is required.</span>
+		    </div>
+
+		    <div>
+			<label>Password:</label>
+			<input type="password" name="password" ng-model="techinfo.host_password" required>
+			<span class="field-error" ng-show="techForm.password.$touched && techForm.password.$invalid">The password is required.</span>
+		    </div>
+			
+			<div>
+			<label>Domain Name:</label>
+			<input type="email" name="domain" ng-model="techinfo.host_domain_name" required>
+			<span class="field-error" ng-show="techForm.domain.$touched && techForm.domain.$invalid && techForm.domain.$error.email">The domain name is required.</span>
+			</div>
+
+			<div>
+			<label>SSH Key file:</label>
+			<input name="sshkey" ng-model="techinfo.host_ssl_certificate">
+			<span class="field-error" ng-show="techForm.webhost.$touched && techForm.webhost.$invalid">SSH key file is required.</span>
+			</div>
+
+			<div class="ftp-details">
+			<h2 class="form-heading">FTP Details</h2>
+			<div class="tech-banner1 wow fadeInUp animated" data-wow-duration="3s" style="visibility: visible; animation-duration: 3s; animation-name: fadeInUp;"><img src="./images/techinfo-bg1.png" class="img-responsive" alt="">
+			</div>
+			<div>
+			<label>Host:</label>
+			<input name="ftpHost" ng-model="techinfo.ftp_host" required>
+			<span class="field-error" ng-show="techForm.ftpHost.$touched && techForm.ftpHost.$invalid">The FTP host is required.</span>
+			</div>
+
+			<div>
+			<label>Username:</label>
+			<input name="ftpUser" ng-model="techinfo.ftp_username" required>
+			<span class="field-error" ng-show="techForm.ftpUser.$touched && techForm.ftpUser.$invalid">The FTP username is required.</span>
+			</div>
+
+			<div>
+			<label>Password:</label>
+			<input type="password" name="ftpPass" ng-model="techinfo.ftp_password" required>
+			<span class="field-error" ng-show="techForm.ftpPass.$touched && techForm.ftpPass.$invalid">The password is required.</span>
+			</div>
+			<div>
+			<label>Port Number:</label>
+			<input name="ftpPort" ng-model="techinfo.ftp_port_number" required>
+			<span class="field-error" ng-show="techForm.ftpPort.$touched && techForm.ftpPort.$invalid">The port number is required.</span>
+			</div>
+
+			<!-- <div>
+			<label>SSH Key file:</label>
+			<input name="ftpKey" ng-model="tech.ftp.file" onchange="angular.element(this).scope().uploadFtpFile(this.files)">
+			<span class="field-error" ng-show="techForm.ftpKey.$touched && techForm.ftpKey.$invalid">SSH key file is required.</span>
+			</div> -->
+			<div>
+			<label>SSH Key file:</label>
+			<input name="ftpKey" ng-model="techinfo.ftp_ssh_key_path">
+			<span class="field-error" ng-show="techForm.ftpKey.$touched && techForm.ftpKey.$invalid">SSH key file is required.</span>
+			</div>
+		    </div>
+
+			<h2 class="form-heading">Database Details</h2>
+			<div>
+			<label>Host</label>
+			<input name="DataHost" ng-model="techinfo.db_host" required>
+			<span class="field-error" ng-show="techForm.DataHost.$touched && techForm.DataHost.$invalid">The database host name is required.</span>
+			</div>
+
+			<div>
+			<label>Username</label>
+			<input name="DataUser" ng-model="techinfo.db_username" required>
+			<span class="field-error" ng-show="techForm.DataUser.$touched && techForm.DataUser.$invalid">The username is required.</span>
+			</div>
+			<div class="tech-banner2 wow fadeInUp animated" data-wow-duration="3s" style="visibility: visible; animation-duration: 3s; animation-name: fadeInUp;"><img src="./images/techinfo-bg3.png" class="img-responsive" alt="">
+			</div>
+			<div class="tech-banner3 wow fadeInUp animated" data-wow-duration="3s" style="visibility: visible; animation-duration: 3s; animation-name: fadeInUp;"><img src="./images/techinfo-bg2.png" class="img-responsive" alt="">
+			</div>
+			<a class="prev-move" click-redirect="/addProducts"> Prev</a>
+			<a class="next-move" ng-show="techForm.$valid" ng-mouseover="update(techinfo)" click-redirect="/integrate-products"> Next</a>
+			 <!-- <pre>{{master | json}} </pre> -->
+		</form>
+		
+    </div>
+</div>
+</div>

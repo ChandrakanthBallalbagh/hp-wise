@@ -1,0 +1,39 @@
+<div class="block-fix">
+<div class="container" ng-controller="integrateController">
+	<ol class="etapier">
+    	<li class="done complete"><span>1</span></li>
+    	<li class="done"><span>2</span></li>
+    	<li class="todo"><span>3</span></li>
+    	<li class="todo"><span>4</span></li>
+    	<li class="todo"><span>5</span></li>
+	</ol>
+	<div class="product-page">
+        <div class="scn-title product-title">Products</div>
+        <div class="product-activa">Activate the products you wish to integrate in your shop:</div>
+    </div>
+    <div class="products-list" ng-repeat="x in products">
+    	<!-- forloop here -->
+       <!--  if(x.enabled == false) x.status = "integrated"; -->
+    	<div class="each-product {{x.enabled}}">
+    		<div class="prod-select" ng-bind="x.product.name"></div><!-- ng-if="x.status==''" -->
+            <!-- <div class="prod-selected" ng-if="x.status=='integrated'" ng-bind="x.name"></div> -->
+    		<div class="product-choice">
+    			<div class="prod-rename"> 
+    				<div class="activate-details"> Activate the products you wish to integrate in your shop</div>
+    				<input class="renamedproduct" name="rename" ng-model="x.product_name"  placeholder="{{x.product.name}}" required>
+    			</div>
+    			<div class="added-products">
+    			     <div class="add-products" ng-click="updateName(x, 'true',x.product_name)"></div>
+    			     <span class="selected-msg">Selected</span>
+    		    </div>
+    		</div>
+    	</div>
+    </div>
+    <div class="tech-banner1 wow fadeInUp animated" data-wow-duration="3s" style="visibility: visible; animation-duration: 3s; animation-name: fadeInUp;">
+        <img src="./images/techinfo-bg1.png" class="img-responsive visible-lg" alt="">
+    </div>
+    <!-- {{status}} -->
+    <a class="next-move" click-redirect="/media-products"> Next</a>
+</div>
+
+</div>

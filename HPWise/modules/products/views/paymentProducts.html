@@ -1,0 +1,129 @@
+<div class="container" ng-controller="paymentController">
+<div class="template-container payment">
+	<div class="">
+        <div class="scn-title payment-title">Payment</div>
+	</div>
+	<div class="template-selected">
+			<span class="place-left">Your Selection</span>
+			<span class="place-right"><button ng-click="changeClass()">Delete</button><i class="fa fa-trash fa-w-18 fa-fw fa-lg"></i></span>
+
+	</div>
+	<div class="template-list">
+		<div class="template-choosen" ng-class="{BorderDefault:settemp == 'templateA'}" ng-show="(display==true || settemp=='templateA')" ng-click="changeTemplate('templateA')">
+               <img class="temp-pic" src="./images/template1-selected.png" align="center">
+               <div class="temp-detail">
+               		<div class="temp-name"> templateA</div>
+               		<div class="temp-desc"> Template details loren ipsum loren amet dolor set, consecteur et doloren amisquiat</div>
+                </div>
+               	<div class="temp-price"> $99.90</div>
+		</div>
+		<div class="template-choosen" ng-class="{BorderDefault:settemp == 'templateB'}" ng-show="(display==true  || settemp=='templateB')" ng-click="changeTemplate('templateB')">
+               <img class="temp-pic" src="./images/template2-selected.png" align="center">
+              <div class="temp-detail">
+               		<div class="temp-name"> templateB</div>
+               		<div class="temp-desc"> Template details loren ipsum loren amet dolor set, consecteur et doloren amisquiat</div>
+                </div>
+               	<div class="temp-price"> $90.90</div>
+		</div>
+		<div class="template-choosen" ng-class="{BorderDefault:settemp == 'templateC'}" ng-show="(display==true  || settemp=='templateC')" ng-click="changeTemplate('templateC')">
+               <img class="temp-pic" src="./images/template1-selected.png" align="center">
+               <div class="temp-detail">
+               		<div class="temp-name"> templateC</div>
+               		<div class="temp-desc"> Template details loren ipsum loren amet dolor set, consecteur et doloren amisquiat</div>
+                </div>
+               	<div class="temp-price"> $9.90</div>
+        </div>
+	</div>
+	<div class="personal-info">
+		<div class="personal-header">
+			<h2><span class="round-no">1</span>
+			<span class="perso-info-title">Personal information</span>
+			<span><a class="edit-btn" ng-show = "editPersonal" ng-click="editForm('personal')">Edit</a></span></h2>
+		</div>
+		<div class="personal-field" ng-show ="personalVisible">
+		<form name="personalForm" class="personalForm">
+        	<div>
+			<label>Name:</label>
+			<input name="personName" ng-model="personal.name" required>
+			<span class="field-error" ng-show="personalForm.personName.$touched && personalForm.personName.$invalid">The Name is required.
+			</span>
+		    </div>
+			
+			<div>
+			<label>Surname:</label>
+			<input name="surname" ng-model="personal.surname" required>
+			<span class="field-error" ng-show="personalForm.surname.$touched && personalForm.surname.$invalid">The Surname is required.
+			</span>
+		    </div>
+
+		    <div>
+			<label>Email:</label>
+			<input name="email" ng-model="personal.email" required>
+			<span class="field-error" ng-show="personalForm.email.$touched && personalForm.email.$invalid">The email is required.
+			</span>
+		    </div>
+		    <div class="persnl-next">
+            	<button class="save-btn next-btn" ng-click="showBill(personal)">Next</button>
+    		</div>
+		</form>
+		</div>
+	</div>
+	<div class="billing-info">
+		<div class="billing-header" ng-class="seen">
+			<h2><span class="round-no">2</span>
+			<span class="bill-info-title">Billing info</span>
+			<span><a class="edit-btn" ng-show = "editBill" ng-click="editForm('bill')">Edit</a></span></h2>
+		</div>
+		<div class="personal-field" ng-show = "billVisible">
+		<form name="billForm" class="personalForm">
+        	<div>
+			<label>Address</label>
+			<input name="billAddress" ng-model="personal.address" required>
+			<span class="field-error" ng-show="billForm.billAddress.$touched && billForm.billAddress.$invalid">Please enter your address.
+			</span>
+		    </div>
+
+		    <div class="two-field-bill">
+			<label>Number</label><br>
+			<input name="billNum" ng-model="personal.number" required>
+			<!-- <span class="field-error" ng-show="billForm.billNum.$touched && billForm.billNum.$invalid">Please enter your door number.
+			</span> -->
+		    </div>
+		    <div class="two-field-bill">
+			<label>Door</label><br>
+			<input name="billdoor" ng-model="personal.door" required>
+			<!-- <span class="field-error" ng-show="billForm.billdoor.$touched && billForm.billdoor.$invalid">Please enter your door.
+			</span> -->
+		    </div>
+			
+			<div>
+			<label>Country</label>
+			<input name="billCountry" ng-model="personal.country" required>
+			<span class="field-error" ng-show="billForm.billCountry.$touched && billForm.billCountry.$invalid">Please enter your Country.
+			</span>
+		    </div>
+
+		    <div>
+			<label>Postal Code</label>
+			<input name="postalCode" ng-model="personal.postal_code" required>
+			<span class="field-error" ng-show="billForm.postalCode.$touched && billForm.postalCode.$invalid">Please enter postal code.
+			</span>
+		    </div>
+
+		    <div>
+			<label>City</label>
+			<input name="billCity" ng-model="personal.city" required>
+			<span class="field-error" ng-show="billForm.billCity.$touched && billForm.billCity.$invalid">Please enter your city.
+			</span>
+		    </div>
+
+		    <div class="persnl-next">
+            	<button class="save-btn next-btn" ng-click="showPay(personal)">Next</button>
+    		</div>
+		</form>
+		</div>
+	</div>
+	<div class="personal-field thank" ng-show = "payInfo"> Thank You
+	</div>
+</div>
+</div>

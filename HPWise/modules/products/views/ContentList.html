@@ -1,0 +1,138 @@
+<div class="block-fix">
+<div class="container" ng-controller="contentController">
+	<ol class="etapier">
+    	<li class="done complete"><span>1</span></li>
+    	<li class="done complete"><span>2</span></li>
+    	<li class="done complete"><span>3</span></li>
+    	<li class="done"><span>4</span></li>
+    	<li class="todo"><span>5</span></li>
+	</ol>
+	<div class="">
+        <div class="scn-title ur-assets-title">Your Assets</div>
+    </div>
+    <div class="assets-sections">
+        <div class="content-head">
+        	<h2>Content &amp; Sections</h2>
+        	<h4>Please add the content you want for your template</h4>
+        </div>
+    
+    <div class="section-first">
+    	<h2 class="section-title" ng-class="{'normal':showsecond}">1. Title &amp; Description</h2>
+    	<form name="myForm" class="section-details">
+    		<div class="section-block block1">
+                <div class="label-field">
+    			     <label class="label-name">site title</label>
+                </div>
+    			<label class="field">
+                    <input class="asset-site-title asset-field" ng-minlength="2" ng-maxlength="25" name="myTitle" ng-model="techinfo.ftp_ssh_key_path" ng-keyup="showsecond=false" required >
+    			<div>This is the general title of the web. it will be displayed on your site</div></label>
+    	    </div>
+    		<div class="section-block block2">
+                <div class="label-field">
+    			     <label class="label-name">Description</label>
+                 </div>
+    			<label class="field"><textarea class="asset-site-desc asset-field" ng-minlength="5" ng-maxlength="50" name="desc" ng-modal="techinfo.site_description" ng-keyup="showsecond=false" required></textarea>
+    			<div>Explain the main objective of your site in one sentense (140 characters) </div></label>
+    		</div>
+    		<div class="asset-bg"><img src="./images/asset-screen1.png" class="img-responsive hidden-xs" alt="">
+			</div>
+        </form>
+        <div class="save-blk" ng-hide="showsecond && myForm.$valid">
+        	<button class="save-btn" ng-disabled="myForm.$invalid" ng-click="showsecond=true">Save and Show Next</button>
+        	<p class="next-section-title" ><b>Next:</b> 2. Menu section &amp; Names</p>
+        </div>
+    </div>
+    <div class="section-second" ng-show="showsecond && myForm.$valid">
+    	<h2 class="section-title" ng-class="{'normal':showthird}">2. Menu section &amp; Names</h2>
+    	<div class="section-details">
+    		<div class="sec-fields">
+    			<div class="menu-msg">Add as many sections you need and put them in the right order. The order and names you
+				add to them will be the onew we’ll show on the menu and inside each section.</div>
+    			<!-- <div class="section-block block2">
+    			     <label>Section name</label>
+                     <input class="menu-name-field asset-field" name="jhj" ng-model="jhj" ng-keyup="showthird=false" required >
+    			     <span>Drag</span>
+    			</div>
+    			<div class="section-block block2">
+    			     <label>Section name</label>
+    			     <input class="menu-name-field asset-field"  ng-modal="sas"  ng-keyup="showthird=false" required>
+    			     <span>Drag</span>
+    			</div>
+    			<div class="section-block block2">
+    			     <label>Section name</label>
+    			     <input class="menu-name-field asset-field"  ng-modal="sas"  ng-keyup="showthird=false" required>
+    			     <span>Drag</span>
+    			</div> -->
+                <div ng-repeat="website in websites" ng-form="websiteForm">
+                     <div class="section-block block2">
+                     <label>Section name</label>
+                     <input class="menu-name-field asset-field" name="website" ng-model="websites[$index]">
+                     </div>
+                     <!--  <input type="url" name="website" ng-model="website"> -->
+                     <!-- <span>Drag</span> -->
+                    
+               </div>
+    			<div class="section-increment">
+        			<button class="add-section-btn" ng-click="addTo(websites, '')" >+ Add Section</button>
+                    <!-- <button ng-click="addTo(websites, 'http://www.x.com')">Add Website</button> -->
+        		</div>
+    	    </div>
+            
+    		<div class="asset-bg"><img src="./images/asset-screen2.png" class="img-responsive hidden-xs" alt="">
+    	    </div>
+        </div>
+        <div class="save-blk" ng-hide="showthird && myForm.$valid">
+            <button class="save-btn" ng-click="showthird=true" ng-disabled="SecForm.$invalid">Save and Show Next</button>
+            <p class="next-section-title"><b>Next:</b> 3. Content</p>
+        </div>
+    </div>
+    <div class="section-third" ng-show="showthird && showsecond">
+        <h2 class="section-title">3. Menu section &amp; Names</h2>
+        <form name="contentForm" class="section-details">
+            <div class="sec-fields">
+                <div class="menu-msg">Add as many sections you need and put them in the right order. The order and names you
+                add to them will be the onew we’ll show on the menu and inside each section.</div>
+                <div class="section-block block3">
+                    <div class="label-field">
+                        <label class="label-name">Content title</label>
+                    </div>
+                    <label class="field">
+                        <input class="asset-content-title asset-field" name="contentName" ng-model="contentName" placeholder="e.g. Create a Wallcovering" required >
+                    </label>
+                </div>
+                <div class="section-block block3">
+                    <div class="label-field">
+                     <label class="label-name">Content Description</label>
+                    </div>
+                    <label class="field">
+                     <input class="asset-content-desc asset-field" name="contentDesc" ng-model="contentDesc" placeholder="what is this for" required >
+                    </label>
+                </div>
+                <div class="section-block block3">
+                    <div class="label-field">
+                        <label class="label-name">Upload Picture</label>
+                    </div>
+                    <label class="field select-from-computer">
+                        <div class="file-text">
+                            Select from computer
+                            <input type="file" class="hide_file" name="fileupload" ng-modal="fileupload">
+                        </div>
+                    </label><span>( no image)</span>
+                </div>
+            <div class="content-increment">
+                    <button class="add-section-btn" ng-modal="a" name="a">+ Add Another Content Block</button>
+            </div>
+        </div>
+        
+        <div class="asset-bg"><img src="./images/asset-screen1.png" class="img-responsive hidden-xs" alt="">
+        </div>
+    </form>
+    <div class="save-blk">
+            <button class="save-btn" ng-disabled="contentForm.$invalid" click-redirect="/payment-details">Save and Show Next</button>
+            <p class="next-section-title"><b>Next:</b> 4.Next items</p>
+    </div>
+    </div>
+    {{myForm.$valid}}{{showsecond}}{{showthird}}{{contentForm.$valid}}
+</div>
+</div>
+</div>
