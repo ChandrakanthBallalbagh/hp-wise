@@ -20,25 +20,44 @@
         .controller('paymentController', paymentController);
         
 
-    choiceProductsController.$inject = ['productServices','$rootScope','$routeParams','$scope']; 
+    choiceProductsController.$inject = ['productServices','$rootScope','$routeParams','$scope','appConfig']; 
 
-    function choiceProductsController(productServices,$rootScope,$routeParams,$scope) {
-            var token = "null";
+    function choiceProductsController(productServices,$rootScope,$routeParams,$scope,appConfig) {
+            var token = ""
             localStorage.setItem("token", token);
+            $rootScope.loginuser = localStorage.getItem("username");
             console.log("template name"+token);
+
+            $scope.choiceTemplate = function(a) {
+            $scope.master = {
+                    wise_template_id: a,
+            };
+            $http.put(appConfig.apiBaseURL+"/memberships",{ "tech_info": $scope.master },
+            {
+            headers: {'x-api-key': $rootScope.setid,
+                          'Content-Type':'application/json',
+                      }
+            })
+            .then(function(response) {
+               console.log("put response"+response);
+            });
+            }
     }
 
-    addProductsController.$inject = ['productServices','$rootScope','$routeParams','$scope','$http'];
+    addProductsController.$inject = ['productServices','$rootScope','$routeParams','$scope','$http','appConfig'];
 
-    function addProductsController(productServices,$rootScope,$routeParams,$scope,$http) {
+    function addProductsController(productServices,$rootScope,$routeParams,$scope,$http,appConfig) {
 	   console.log("inside template");
        $scope.user = {};
        $scope.results = [];
+       var token = $routeParams.tempname;
+       localStorage.setItem("token", token);
        $rootScope.settemp = localStorage.getItem("token");
-       $scope.setid = localStorage.getItem("member_id_token");
+       $rootScope.setid = localStorage.getItem("member_id_token");
        $scope.u_id = localStorage.getItem("u_id");
+       $rootScope.loginuser = localStorage.getItem("username");
        console.log("template namme:"+ $rootScope.settemp)
-       console.log("memberships id:"+$scope.setid+"uid"+$scope.u_id)
+       console.log("memberships id:"+$rootScope.setid+"uid"+$scope.u_id)
 
         if($rootScope.settemp == null){
             console.log("hello");
@@ -49,8 +68,8 @@
             console.log("temp choice"+$rootScope.settemp);
         }
 
-        $http.get("http://10.10.31.30:3000/api/wise/tech_info/"+$scope.u_id,{
-            headers: {'x-api-key': $scope.setid,
+        $http.get(appConfig.apiBaseURL+"/tech_info/"+$scope.u_id,{
+            headers: {'x-api-key': $rootScope.setid,
                         'Content-Type':'application/json',
                      }
         })
@@ -86,9 +105,9 @@
                     db_username: tech.db_username
     };
 
-            $http.put("http://10.10.31.30:3000/api/wise/tech_info/"+$scope.u_id,{ "tech_info": $scope.master },
+            $http.put(appConfig.apiBaseURL+"/tech_info/"+$scope.u_id,{ "tech_info": $scope.master },
                 {
-                headers: {'x-api-key': $scope.setid,
+                headers: {'x-api-key': $rootScope.setid,
                           'Content-Type':'application/json',
                          }
                 })
@@ -109,18 +128,20 @@
         // };
     }
 
-    mediaController.$inject = ['productServices','$rootScope','$routeParams','$scope','$http'];
+    mediaController.$inject = ['productServices','$rootScope','$routeParams','$scope','$http','appConfig'];
 
-    function mediaController(productServices,$rootScope,$routeParams,$scope,$http) {
+    function mediaController(productServices,$rootScope,$routeParams,$scope,$http,appConfig) {
         console.log("inside media template");
         console.log($rootScope.settemp);
         $rootScope.settemp = localStorage.getItem("token");
+        $rootScope.loginuser = localStorage.getItem("username");
         $scope.u_id = localStorage.getItem("u_id");
+        $rootScope.setid = localStorage.getItem("member_id_token");
 
 
 
-        $http.get("http://10.10.31.30:3000/api/wise/tech_info/"+$scope.u_id,{
-            headers: {'x-api-key': '268801c17b7166c6757a96041aae0d3f',
+        $http.get(appConfig.apiBaseURL+"/tech_info/"+$scope.u_id,{
+            headers: {'x-api-key': $rootScope.setid,
                         'Content-Type':'application/json',
                      }
         })
@@ -141,9 +162,9 @@
                     fotolia_api_key: c,
     };
 
-            $http.put("http://10.10.31.30:3000/api/wise/tech_info/"+$scope.u_id,{ "tech_info": $scope.master },
+            $http.put(appConfig.apiBaseURL+"/tech_info/"+$scope.u_id,{ "tech_info": $scope.master },
                 {
-                headers: {'x-api-key': '268801c17b7166c6757a96041aae0d3f',
+                headers: {'x-api-key': $rootScope.setid,
                           'Content-Type':'application/json',
                          }
                 })
@@ -164,36 +185,66 @@
             // $rootScope.fotoliaApi = localStorage.getItem("fotoliaApi");
         }
 
-        $scope.optionlist = ["Pattern Design","Fotolia","Media Image"];
+        $scope.optionlist = ["Pattern design","Fotolia","Media gallery"];
 
-        if(!$rootScope.media_dummy){
-        $scope.items = [
-        {
-                "name":"wallcovering",
-                "use": false,
-                "bgMedia": "",
-                "fgMedia" : ""
-            }, {
-                "name":"Poster",
-                "use": false,
-                "bgMedia": "",
-                "fgMedia" : ""
-            }, {
-                "name":"wall-decals",
-                "use": false,
-                "bgMedia": "",
-                "fgMedia" : ""
-            }
-        ]
-       }
-       else {
-            $scope.items= angular.copy($rootScope.media_dummy);
-        }
-        console.log($scope.items);
+        $http.get(appConfig.apiBaseURL+"/"+$scope.u_id+"/products",{
+            headers: {'x-api-key': $rootScope.setid,
+                        'Content-Type':'application/json',
+                     }
+        })
+        .then(function(response) {
+               // $scope.mediainfo = response.data.data;
+               console.log("$scope.media fetch pro"+response.data.data);
+                $scope.product = response.data.data;
+               // console.log($scope.mediainfo.product);
+        });
 
-        $scope.mediaChange = function(item){
-            $rootScope.media_dummy= angular.copy($scope.items);
-            console.log($rootScope.media_dummy);
+        // if(!$rootScope.media_dummy){
+       //  $scope.items = [
+       //  {
+       //          "name":"wallcovering",
+       //          "use": false,
+       //          "bgMedia": "",
+       //          "fgMedia" : ""
+       //      }, {
+       //          "name":"Poster",
+       //          "use": false,
+       //          "bgMedia": "",
+       //          "fgMedia" : ""
+       //      }, {
+       //          "name":"wall-decals",
+       //          "use": false,
+       //          "bgMedia": "",
+       //          "fgMedia" : ""
+       //      }
+       //  ]
+       // }
+       // else {
+       //      $scope.items= angular.copy($rootScope.media_dummy);
+       //  }
+       //  console.log($scope.items);
+
+        $scope.mediaChange = function(item,bg,fg){
+            // $rootScope.media_dummy= angular.copy($scope.items);
+            // console.log($rootScope.media_dummy);
+
+            console.log(bg);
+            console.log("bk"+bg+"ggdg"+fg);
+
+            $scope.master = {
+                    background_imagery: bg,
+                    objects_imagery: fg,
+            };
+
+            $http.put(appConfig.apiBaseURL+"/products/"+item.id,{ "wise_product": $scope.master },
+                {
+                headers: {'x-api-key': $rootScope.setid,
+                          'Content-Type':'application/json',
+                         }
+                })
+            .then(function(response) {
+               console.log("put response"+response);
+            });
         }
         //declare sku array here 
   
@@ -206,16 +257,18 @@
     // console.log($scope.albumNameArray);
     }
 
-    integrateController.$inject = ['productServices','$rootScope','$routeParams','$scope','$http'];
+    integrateController.$inject = ['productServices','$rootScope','$routeParams','$scope','$http','appConfig'];
 
-    function integrateController(productServices,$rootScope,$routeParams,$scope,$http) {
+    function integrateController(productServices,$rootScope,$routeParams,$scope,$http,appConfig) {
         console.log("inside integrate Controller");
-        console.log($rootScope.settemp);
+        
+        $rootScope.setid = localStorage.getItem("member_id_token");
+        console.log($rootScope.setid);
         $rootScope.settemp = localStorage.getItem("token");
         $scope.u_id = localStorage.getItem("u_id");
 
-        $http.get("http://10.10.31.30:3000/api/wise/"+$scope.u_id+"/products",{
-            headers: {'x-api-key': '268801c17b7166c6757a96041aae0d3f',
+        $http.get(appConfig.apiBaseURL+"/"+$scope.u_id+"/products",{
+            headers: {'x-api-key': $rootScope.setid,
                         'Content-Type':'application/json',
                      }
         })
@@ -283,9 +336,9 @@
                     enable: newstatus,
             };
 
-            $http.put("http://10.10.31.30:3000/api/wise/products/"+item.id,{ "wise_product": $scope.master },
+            $http.put(appConfig.apiBaseURL+"/products/"+item.id,{ "wise_product": $scope.master },
                 {
-                headers: {'x-api-key': '268801c17b7166c6757a96041aae0d3f',
+                headers: {'x-api-key': $rootScope.setid,
                           'Content-Type':'application/json',
                          }
                 })
@@ -298,13 +351,13 @@
         } 
     }
 
-    contentController.$inject = ['productServices','$rootScope','$routeParams','$scope','$http'];
-        function contentController(productServices,$rootScope,$routeParams,$scope,$http) {
+    contentController.$inject = ['productServices','$rootScope','$routeParams','$scope','$http','appConfig'];
+        function contentController(productServices,$rootScope,$routeParams,$scope,$http,appConfig) {
 
             $scope.showsecond =false;
             $scope.showthird =false;
             $scope.u_id = localStorage.getItem("u_id");
-            $scope.setid = localStorage.getItem("member_id_token");
+            $rootScope.setid = localStorage.getItem("member_id_token");
             console.log($scope.showsecond);
             $scope.websites = ['Home', 'Application', 'wall'];
 
@@ -312,8 +365,8 @@
                     array.push(template);
             };
 
-            $http.get("http://10.10.31.30:3000/api/wise/memberships/",{
-            headers: {'x-api-key': $scope.setid,
+            $http.get(appConfig.apiBaseURL+"/memberships/",{
+            headers: {'x-api-key': $rootScope.setid,
                         'Content-Type':'application/json',
                      }
         })
@@ -322,8 +375,8 @@
                console.log("$scope.mediainfo"+$scope.menu);
         });
 
-        $http.get("http://10.10.31.30:3000/api/wise/tech_info/"+$scope.u_id,{
-            headers: {'x-api-key': $scope.setid,
+        $http.get(appConfig.apiBaseURL+"/tech_info/"+$scope.u_id,{
+            headers: {'x-api-key': $rootScope.setid,
                         'Content-Type':'application/json',
                      }
         })
@@ -332,15 +385,37 @@
                console.log(response);
                console.log("sitetitle"+$scope.techinfo.site_description);
             });
+
+            $scope.sitedeals = function(sites){
+            // $rootScope.media_dummy= angular.copy($scope.items);
+            // console.log($rootScope.media_dummy);
+
+            console.log(sites.site_title);
+
+            $scope.master = {
+                    site_title: sites.site_title,
+                    site_description: sites.site_description,
+            };
+
+            $http.put(appConfig.apiBaseURL+"/tech_info/"+$scope.u_id,{ "tech_info": $scope.master },
+                {
+                headers: {'x-api-key': $rootScope.setid,
+                          'Content-Type':'application/json',
+                         }
+                })
+            .then(function(response) {
+               console.log("put response"+response);
+            });
+        }
            
     }
 
-    paymentController.$inject = ['productServices','$rootScope','$routeParams','$scope','$http'];
-        function paymentController(productServices,$rootScope,$routeParams,$scope,$http) {
+    paymentController.$inject = ['productServices','$rootScope','$routeParams','$scope','$http','appConfig'];
+        function paymentController(productServices,$rootScope,$routeParams,$scope,$http,appConfig) {
             
             $rootScope.settemp = localStorage.getItem("token");
             $scope.u_id = localStorage.getItem("u_id");
-            $scope.setid = localStorage.getItem("member_id_token");
+            $rootScope.setid = localStorage.getItem("member_id_token");
 
             $scope.billVisible= $scope.editBill = false;
             $scope.payInfo =false;
@@ -349,8 +424,8 @@
             $scope.seen = "blur";
             var token;
 
-            $http.get("http://10.10.31.30:3000/api/wise/personal_detail/"+$scope.u_id,{
-            headers: {'x-api-key': $scope.setid,
+            $http.get(appConfig.apiBaseURL+"/personal_detail/"+$scope.u_id,{
+            headers: {'x-api-key': $rootScope.setid,
                         'Content-Type':'application/json',
                      }
         })
@@ -375,9 +450,9 @@
                     email: personal.email,
                     };
 
-                    $http.put("http://10.10.31.30:3000/api/wise/personal_detail/"+$scope.u_id,{ "personal_detail": $scope.master },
+                    $http.put(appConfig.apiBaseURL+"/personal_detail/"+$scope.u_id,{ "personal_detail": $scope.master },
                         {
-                           headers: {'x-api-key': '268801c17b7166c6757a96041aae0d3f',
+                           headers: {'x-api-key': $rootScope.setid,
                           'Content-Type':'application/json',
                          }
                         })
@@ -402,9 +477,9 @@
                     city: personal.city,
                     };
 
-                    $http.put("http://10.10.31.30:3000/api/wise/personal_detail/"+$scope.u_id,{ "personal_detail": $scope.master },
+                    $http.put(appConfig.apiBaseURL+"/personal_detail/"+$scope.u_id,{ "personal_detail": $scope.master },
                         {
-                           headers: {'x-api-key': '268801c17b7166c6757a96041aae0d3f',
+                          headers: {'x-api-key': $rootScope.setid,
                           'Content-Type':'application/json',
                          }
                         })

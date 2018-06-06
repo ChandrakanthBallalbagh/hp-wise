@@ -11,7 +11,7 @@
         <div class="scn-title content-title">Content</div>
 
         <form name="contentForm" class="contentForm">
-        	 hi {{settemp}}
+        	<!--  hi {{settemp}} -->
         	<h2 class="form-heading">Pattern Design Details</h2>
 
         	<div>
@@ -51,26 +51,26 @@
                 </tr>               
 					<!-- //foreach($data['applications'] as $k => $v) -->
 				<div>
-                <tr ng-repeat="x in items">
-                    <th><label for="">{{x.name}}</label></th>
+                <tr ng-repeat="x in product" ng-if="x.enabled">
+                    <th><label for="">{{x.product_name}}</label></th>
                     <td>
-                        <input type="checkbox" name="check-{{x.name}}" id="select-hp" ng-model="x.use" ng-disabled="contentForm.$invalid" ng-click="mediaChange(x)">
-                        <span class="description">Check if you are using {{x.name}}</span>
+                        <input type="checkbox" name="check-{{x.product_name}}" id="select-hp" ng-model="x.use" ng-disabled="contentForm.$invalid" ng-click="mediaChange(x,x.background_imagery,x.objects_imagery)">
+                        <span class="description">Check if you are using {{x.product_name}}</span>
                     </td>
                     <td>
                         <!-- <select  name="" ng-model="x.bgMedia" ng-disabled="contentForm.$invalid" ng-change="mediaChange(x.bgMedia)">
                             <option ng-selected="true">Select an option</option>
                         	<option class="select" ng-repeat="option in optionlist">{{option}}</option>
                         </select> -->
-                        <div ng-switch on="x.name">
+                        <div ng-switch on="x.product_name">
                         <div ng-switch-when="wallcovering" ng-switch-when-separator=",">
-                            <span ng-model="x.bgMedia" ng-init="x.bgMedia='n/a'"> n/a</span>
+                            <span ng-model="x.background_imagery" ng-init="x.background_imagery='n/a'"> n/a</span>
                         </div>
                         <div ng-switch-when="Roller" ng-switch-when-separator=",">
-                            <span ng-model="x.bgMedia" ng-init="x.bgMedia='n/a'"> n/a</span>
+                            <span ng-model="x.background_imagery" ng-init="x.background_imagery='n/a'"> n/a</span>
                         </div>
                         <div ng-switch-default>
-                            <select  name="" ng-model="x.bgMedia" ng-disabled="contentForm.$invalid" ng-change="mediaChange(x.bgMedia)">
+                        <select  name="" ng-model="x.background_imagery" ng-disabled="contentForm.$invalid" ng-change="mediaChange(x,x.background_imagery,x.objects_imagery)">
                             <option ng-selected="true">Select an option</option>
                             <option class="select" ng-repeat="option in optionlist">{{option}}</option>
                             </select>
@@ -79,11 +79,12 @@
                     </td>
         
                     <td>
-                        <select  name="" ng-model="x.fgMedia" ng-disabled="contentForm.$invalid" ng-change="mediaChange(x.fgMedia)">
+                        <select  name="" ng-model="x.objects_imagery" ng-disabled="contentForm.$invalid" ng-change="mediaChange(x,x.background_imagery,x.objects_imagery)">
                             <option ng-selected="true">Select an option</option>
                         	<option ng-repeat="option in optionlist">{{option}}</option>
                         </select>
                     </td>
+                </div>
                 </tr>
                </div>
                 

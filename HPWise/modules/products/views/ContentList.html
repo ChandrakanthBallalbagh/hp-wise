@@ -21,24 +21,24 @@
     	<form name="myForm" class="section-details">
     		<div class="section-block block1">
                 <div class="label-field">
-    			     <label class="label-name">site title</label>
+    			     <label class="label-name">Site title</label>
                 </div>
     			<label class="field">
-                    <input class="asset-site-title asset-field" ng-minlength="2" ng-maxlength="25" name="myTitle" ng-model="techinfo.ftp_ssh_key_path" ng-keyup="showsecond=false" required >
+                    <input class="asset-site-title asset-field" ng-minlength="2" ng-maxlength="25" name="myTitle" ng-model="techinfo.site_title" ng-keyup="showsecond=false" required >
     			<div>This is the general title of the web. it will be displayed on your site</div></label>
     	    </div>
     		<div class="section-block block2">
                 <div class="label-field">
     			     <label class="label-name">Description</label>
                  </div>
-    			<label class="field"><textarea class="asset-site-desc asset-field" ng-minlength="5" ng-maxlength="50" name="desc" ng-modal="techinfo.site_description" ng-keyup="showsecond=false" required></textarea>
+    			<label class="field"><textarea class="asset-site-desc asset-field" ng-minlength="5" ng-maxlength="50" name="desc" ng-model="techinfo.site_description" ng-keyup="showsecond=false" required></textarea>
     			<div>Explain the main objective of your site in one sentense (140 characters) </div></label>
     		</div>
     		<div class="asset-bg"><img src="./images/asset-screen1.png" class="img-responsive hidden-xs" alt="">
 			</div>
         </form>
         <div class="save-blk" ng-hide="showsecond && myForm.$valid">
-        	<button class="save-btn" ng-disabled="myForm.$invalid" ng-click="showsecond=true">Save and Show Next</button>
+        	<button class="save-btn" ng-disabled="myForm.$invalid" ng-click="showsecond=true" ng-mouseover="sitedeals(techinfo)">Save and Show Next</button>
         	<p class="next-section-title" ><b>Next:</b> 2. Menu section &amp; Names</p>
         </div>
     </div>
@@ -129,10 +129,10 @@
     </form>
     <div class="save-blk">
             <button class="save-btn" ng-disabled="contentForm.$invalid" click-redirect="/payment-details">Save and Show Next</button>
-            <p class="next-section-title"><b>Next:</b> 4.Next items</p>
+            <p class="next-section-title"><b>Next:</b> 4.Basic information</p>
     </div>
     </div>
-    {{myForm.$valid}}{{showsecond}}{{showthird}}{{contentForm.$valid}}
+    <!-- {{myForm.$valid}}{{showsecond}}{{showthird}}{{contentForm.$valid}} -->
 </div>
 </div>
 </div>

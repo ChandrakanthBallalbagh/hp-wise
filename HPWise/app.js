@@ -55,11 +55,32 @@
     //INJECT $cordovaPush, $cordovaDevice when intergrating PUSH BOTIFICATION
     //Download these plugins using PhoneGap cli command format is mention in lib/ng-cordova.js file
 
-    run.$inject = ['$rootScope', '$location', '$timeout', 'appConfig', 'navigationDrawer', '$log'];
+    run.$inject = ['$rootScope', '$location', '$timeout', 'appConfig', 'navigationDrawer', '$log','$http'];
 
-    function run($rootScope, $location, $timeout, appConfig, navigationDrawer, $log) {
+    function run($rootScope, $location, $timeout, appConfig, navigationDrawer, $log, $http) {
         // $location.path('/products');
         $rootScope.menuStatus = "close";
+
+        // $http.get(appConfig.apiBaseURL+"/memberships",{
+        //     headers: {'x-api-key': "268801c17b7166c6757a96041aae0d3f",
+        //                 'Content-Type':'application/json',
+        //              }
+        //     })
+        //     .success(function(data){
+        //     // .then(function(response) {
+        //        // $scope.techinfo = response.data;
+        //        // $scope.result = data;
+        //        console.log("run call"+data.result);
+        //        $rootScope.setid = "268801c17b7166c6757a96041aae0d3f";
+        //        console.log("run call"+$rootScope.setid);
+        //     })
+        //     .error(function (error){
+        //         // $scope.data.error = { message: error, status: status};
+        //         // console.log($scope.data.error.status);
+        //         console.log("run call error status"+error.result);
+        //         // $location.path("/addProducts"); 
+        //     }); 
+
         var history = [];
         $timeout(function() {
             $rootScope.checkHeader();

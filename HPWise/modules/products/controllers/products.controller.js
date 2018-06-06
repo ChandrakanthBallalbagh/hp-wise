@@ -15,42 +15,43 @@
         .controller('productsController', productsController);
 
 
-    productsController.$inject = ['productServices', '$scope', '$location', '$sce', '$routeParams','$http'];
+    productsController.$inject = ['productServices', '$scope', '$rootScope', '$location', '$sce', '$routeParams','$http','appConfig'];
 
-    function productsController(productServices, $scope, $location, $sce, $routeParams,$http) {
+    function productsController(productServices, $scope, $rootScope, $location, $sce, $routeParams,$http,appConfig) {
         console.log("inside controlelr");
 
-        $http.get("http://10.10.31.30:3000/api/wise/admin_details",{
-            headers: {
-                        'Content-Type':'application/json',
-                     }
-            })
-            .success(function(data){
-            // .then(function(response) {
-               // $scope.techinfo = response.data;
-               // $scope.result = data;
-               console.log("meaaa"+data.data);
-               // console.log("data"+ data.data.id);
-               // $scope.result = response.data.result;
-               // $scope.template = data.data.wise_template.name;
-               // localStorage.setItem("token", $scope.template);
-               // // $scope.userid = response.data.data.id;
-               // var userid = data.data.id;
-               // localStorage.setItem("u_id", userid);
-               // console.log(userid);
-               // console.log($scope.template+""+$scope.userid);
+        // $http.get("http://10.10.31.30:3000/api/wise/admin_details",{
+        //     headers: {
+        //                 'Content-Type':'application/json',
+        //              }
+        //     })
+        //     .success(function(data){
+        //     // .then(function(response) {
+        //        // $scope.techinfo = response.data;
+        //        // $scope.result = data;
+        //        console.log("meaaa"+data.data);
 
-            // if(data.result == "SUCCESS"){
-            //     console.log(" if");
-            //     $location.path("/info-products/"+$scope.template);
-            // }
-            })
-            .error(function (error){
-                // $scope.data.error = { message: error, status: status};
-                // console.log($scope.data.error.status);
-                console.log("error"+error.result);
-                // $location.path("/addProducts"); 
-            });
+        //        // console.log("data"+ data.data.id);
+        //        // $scope.result = response.data.result;
+        //        // $scope.template = data.data.wise_template.name;
+        //        // localStorage.setItem("token", $scope.template);
+        //        // // $scope.userid = response.data.data.id;
+        //        // var userid = data.data.id;
+        //        // localStorage.setItem("u_id", userid);
+        //        // console.log(userid);
+        //        // console.log($scope.template+""+$scope.userid);
+
+        //     // if(data.result == "SUCCESS"){
+        //     //     console.log(" if");
+        //     //     $location.path("/info-products/"+$scope.template);
+        //     // }
+        //     })
+        //     .error(function (error){
+        //         // $scope.data.error = { message: error, status: status};
+        //         // console.log($scope.data.error.status);
+        //         console.log("error"+error.result);
+        //         // $location.path("/addProducts"); 
+        //     });
 
 
 
@@ -60,9 +61,9 @@
         var member_id_token = $routeParams.tempname;
         localStorage.setItem("member_id_token", member_id_token);
 
-        $scope.setid = localStorage.getItem("member_id_token");
-            console.log("member id:"+$scope.setid);
-            if($scope.setid == "undefined"){
+        $rootScope.setid = localStorage.getItem("member_id_token");
+            console.log("member id:"+$rootScope.setid);
+            if($rootScope.setid == "undefined"){
                 console.log("not set");
             }
             else{
@@ -119,12 +120,12 @@
         // }
         $scope.call = function() {
             // productServices.callApi({}, 'films/1/').then(function(res) {
-            // console.log("Api response", +$scope.setid);
+             // console.log("Api response", +$scope.setid);
             $scope.result= "";
             $scope.template= "";
 
-            $http.get("http://10.10.31.30:3000/api/wise/memberships",{
-            headers: {'x-api-key': $scope.setid,
+            $http.get(appConfig.apiBaseURL+"/memberships",{
+            headers: {'x-api-key': $rootScope.setid,
                         'Content-Type':'application/json',
                      }
             })
@@ -132,26 +133,27 @@
             // .then(function(response) {
                // $scope.techinfo = response.data;
                // $scope.result = data;
-               console.log("meaaa"+data.result);
+               console.log("result status"+data.result);
                console.log("data"+ data.data.id);
                // $scope.result = response.data.result;
                $scope.template = data.data.wise_template.name;
                localStorage.setItem("token", $scope.template);
+               localStorage.setItem("username", data.data.admin_email);
                // $scope.userid = response.data.data.id;
                var userid = data.data.id;
                localStorage.setItem("u_id", userid);
-               console.log(userid);
+               console.log("user"+data.data.admin_email);
                // console.log($scope.template+""+$scope.userid);
 
             if(data.result == "SUCCESS"){
-                console.log(" if");
+                console.log("if");
                 $location.path("/info-products/"+$scope.template);
             }
             })
             .error(function (error){
                 // $scope.data.error = { message: error, status: status};
                 // console.log($scope.data.error.status);
-                console.log("error"+error.result);
+                console.log("error status"+error.result);
                 $location.path("/addProducts"); 
             }); 
 
