@@ -20,7 +20,7 @@
     function productsController(productServices, $scope, $rootScope, $location, $sce, $routeParams,$http,appConfig) {
         console.log("inside controlelr");
 
-        // $http.get("http://10.10.31.30:3000/api/wise/admin_details",{
+        // $http.get(appConfig.apiBaseURL+"/admin_details",{
         //     headers: {
         //                 'Content-Type':'application/json',
         //              }
@@ -123,6 +123,7 @@
              // console.log("Api response", +$scope.setid);
             $scope.result= "";
             $scope.template= "";
+            $scope.loading = true;
 
             $http.get(appConfig.apiBaseURL+"/memberships",{
             headers: {'x-api-key': $rootScope.setid,
@@ -136,17 +137,19 @@
                console.log("result status"+data.result);
                console.log("data"+ data.data.id);
                // $scope.result = response.data.result;
-               $scope.template = data.data.wise_template.name;
-               localStorage.setItem("token", $scope.template);
+               //changeswise : changed comment in hpwise product.controller
                localStorage.setItem("username", data.data.admin_email);
                // $scope.userid = response.data.data.id;
                var userid = data.data.id;
                localStorage.setItem("u_id", userid);
                console.log("user"+data.data.admin_email);
+               $scope.loading = false;
                // console.log($scope.template+""+$scope.userid);
 
             if(data.result == "SUCCESS"){
                 console.log("if");
+                $scope.template = data.data.wise_template.name;  //changeswise : changed comment in hpwise product.controller
+                localStorage.setItem("token", $scope.template);   //changeswise : changed comment in hpwise product.controller
                 $location.path("/info-products/"+$scope.template);
             }
             })

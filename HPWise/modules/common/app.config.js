@@ -14,6 +14,9 @@
         .constant('appConfig', {
 
             'apiBaseURL':'http://10.10.31.30:3000/api/wise',
+            // 'apiBaseURL': window.location.origin+"/api/wise",
+            // 'apiBaseURL':'https://integration.hpwallart.com/api/wise',
+            // 'apiBaseURL':'https://hpwallart.com/api/wise',
 
             'debug': true,
             'apitimeout': 30000,

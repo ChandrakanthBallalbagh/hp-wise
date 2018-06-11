@@ -43,6 +43,7 @@ body {
     text-align: center;
     padding-left: 20%;
     color: #fff;
+    vertical-align: 3px;
 }
 .usr-details{
     width: 23%;
@@ -51,6 +52,12 @@ body {
 .usr-name{
     float: right;
     color: #fff;
+}
+.user_avatar{
+    float: right;
+    border: 1px solid #ddd;
+    width: 20px;
+    height: 20px;
 }
 .footerStyle {
     clear: both;
@@ -276,7 +283,8 @@ body {
 }
 
 .img-selector {
-  position: relative;
+    position: relative;
+    cursor: pointer;
 }
 
 .temp1-pic {
@@ -357,6 +365,9 @@ background-color: #767676;
 }
 .template-name {
     font-weight: 600;
+}
+.template-desc{
+    min-height: 80px;
 }
 .temp-feature {
     padding: 84px;
@@ -713,6 +724,10 @@ input[type=checkbox]:checked:before {
     bottom: 0;
     right: 0px;
 }
+.section-full-msg{
+    color: #ff5151;
+    padding-left: 12px;
+}
 .label-name{
     vertical-align: top;
 }
@@ -837,6 +852,8 @@ label.field{
 }
 .temp-pic{
     vertical-align: top;
+    width: 165px;
+    height: 156px;
 }
 .temp-price{
     width: 20%;
@@ -959,6 +976,77 @@ label.field{
     color: #00b8ff;
     font-size: 20px;
 }
+.btn-gap{
+    margin-bottom: 20px;
+}
+
+.direction{
+    font-size: 20px;
+    color: #fff;
+    background-color: rgb(35, 167, 245, 1);
+    padding: 10px 30px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.direction:hover{
+    text-decoration: none;
+    color: #000;
+}
+.prev-move{
+    float: left;
+}
+.next-move{
+    float: right;
+}
+.spin-here{
+    position: relative;
+}
+/*spinner for start page*/
+.spinner.onarrow{
+    position: absolute;
+    top: -8px;
+    /* left: 99px; */
+    right: 7px;
+}
+.l_ball{
+    position: absolute;
+    top: 0px;
+    left: 13px;
+}
+.spinner{
+    border: 15px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 15px solid blue;
+    border-right: 15px solid green;
+    border-bottom: 15px solid red;
+    border-left: 15px solid pink;
+    width: 20px;
+    height: 20px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+}
+.spinner.loader-icon{
+    width: 80px;
+    height: 80px;
+    text-align: center;
+    margin: 0 auto;
+    border-top: 15px solid #3498db;
+    border-right: 15px solid #f3f3f3;
+    border-bottom: 15px solid #3498db;
+    border-left: 15px solid #f3f3f3;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 @media only screen and (max-width: 768px){
     .template-1, .template-2, .template-3 {
         text-align: -webkit-center;

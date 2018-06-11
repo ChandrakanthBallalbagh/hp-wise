@@ -121,9 +121,18 @@
 
             function click() {
                 // var checkNetwork = [];
+
+                var myVar = setTimeout(alertFunc, 1000);
+                
+
+                function alertFunc() {
+                        // alert("$location");
+                        $location.path($attrs.clickRedirect);
+                        $scope.$apply();
+                }
                 // if ($.inArray($attrs.clickRedirect, checkNetwork) === -1) {
-                    $location.path($attrs.clickRedirect);
-                    $scope.$apply();
+                    // $location.path($attrs.clickRedirect);
+                    // $scope.$apply();
                 // } else {
                 //     if (!$rootScope.offline) {
                 //         $location.path($attrs.clickRedirect);

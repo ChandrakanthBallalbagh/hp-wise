@@ -33,7 +33,7 @@
 			
 			<div>
 			<label>Domain Name:</label>
-			<input type="email" name="domain" ng-model="techinfo.host_domain_name" required>
+			<input name="domain" ng-model="techinfo.host_domain_name" required>
 			<span class="field-error" ng-show="techForm.domain.$touched && techForm.domain.$invalid && techForm.domain.$error.email">The domain name is required.</span>
 			</div>
 
@@ -89,7 +89,7 @@
 			<span class="field-error" ng-show="techForm.DataHost.$touched && techForm.DataHost.$invalid">The database host name is required.</span>
 			</div>
 
-			<div>
+			<div class="btn-gap">
 			<label>Username</label>
 			<input name="DataUser" ng-model="techinfo.db_username" required>
 			<span class="field-error" ng-show="techForm.DataUser.$touched && techForm.DataUser.$invalid">The username is required.</span>
@@ -98,8 +98,8 @@
 			</div>
 			<div class="tech-banner3 wow fadeInUp animated" data-wow-duration="3s" style="visibility: visible; animation-duration: 3s; animation-name: fadeInUp;"><img src="./images/techinfo-bg2.png" class="img-responsive" alt="">
 			</div>
-			<a class="prev-move" click-redirect="/addProducts"> Prev</a>
-			<a class="next-move" ng-show="techForm.$valid" ng-mouseover="update(techinfo)" click-redirect="/integrate-products"> Next</a>
+			<a class="prev-move direction" click-redirect="/addProducts">Back</a>
+			<a class="next-move direction" ng-show="techForm.$valid" ng-mouseover="update(techinfo)" click-redirect="/integrate-products"> Next</a>
 			 <!-- <pre>{{master | json}} </pre> -->
 		</form>
 		

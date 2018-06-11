@@ -20,26 +20,54 @@
         .controller('paymentController', paymentController);
         
 
-    choiceProductsController.$inject = ['productServices','$rootScope','$routeParams','$scope','appConfig']; 
+    choiceProductsController.$inject = ['productServices','$rootScope','$routeParams','$scope','appConfig','$http','$location']; 
 
-    function choiceProductsController(productServices,$rootScope,$routeParams,$scope,appConfig) {
-            var token = ""
+    function choiceProductsController(productServices,$rootScope,$routeParams,$scope,appConfig, $http,$location) {
+            var token = localStorage.getItem("token");
+            var userid =localStorage.getItem("u_id");
+            $scope.loading = true;
+            console.log("uid"+userid);
             localStorage.setItem("token", token);
+            localStorage.setItem("u_id", userid);
+            $rootScope.setid = localStorage.getItem("member_id_token");
             $rootScope.loginuser = localStorage.getItem("username");
             console.log("template name"+token);
 
-            $scope.choiceTemplate = function(a) {
+            $http.get(appConfig.apiBaseURL+"/templates",{
+            headers: {'x-api-key': $rootScope.setid,
+                        'Content-Type':'application/json',
+                     }
+            })
+            .then(function(response) {
+               $scope.personal = response.data.data.admin.emai;
+               $scope.templates = response.data.data.templates;
+               $scope.loading = false;
+               console.log("template delete user"+$scope.personal);
+               console.log("personal"+response.data.data.admin.company_name);
+               // $location.path("/info-products/"+$scope.template);
+            });
+
+            $scope.choiceTemplate = function(a,id) {
+            console.log(",choices template"+id);
+            $scope.loading_ball = true;
             $scope.master = {
-                    wise_template_id: a,
+                    wise_template_id: id,
             };
-            $http.put(appConfig.apiBaseURL+"/memberships",{ "tech_info": $scope.master },
+
+            $http.put(appConfig.apiBaseURL+"/memberships",{ "wise": $scope.master },
             {
             headers: {'x-api-key': $rootScope.setid,
                           'Content-Type':'application/json',
                       }
             })
             .then(function(response) {
-               console.log("put response"+response);
+                $scope.loading_ball = false;
+                userid = response.data.data.id;
+                console.log("new choice product user id:"+userid);
+                localStorage.setItem("u_id", userid);
+                $scope.u_id = localStorage.getItem("u_id");
+                localStorage.setItem("new_id", $scope.u_id);
+                $location.path("/info-products/"+a);
             });
             }
     }
@@ -57,7 +85,7 @@
        $scope.u_id = localStorage.getItem("u_id");
        $rootScope.loginuser = localStorage.getItem("username");
        console.log("template namme:"+ $rootScope.settemp)
-       console.log("memberships id:"+$rootScope.setid+"uid"+$scope.u_id)
+       console.log("memberships id:"+$rootScope.setid+"uid"+$scope.u_id);
 
         if($rootScope.settemp == null){
             console.log("hello");
@@ -261,6 +289,7 @@
 
     function integrateController(productServices,$rootScope,$routeParams,$scope,$http,appConfig) {
         console.log("inside integrate Controller");
+         $scope.loading = true;
         
         $rootScope.setid = localStorage.getItem("member_id_token");
         console.log($rootScope.setid);
@@ -274,7 +303,7 @@
         })
         .then(function(response) {
                // $scope.mediainfo = response.data.data;
-               console.log("$scope.integrate"+response.data.data);
+                $scope.loading = false;
                 $scope.products = response.data.data;
                // console.log($scope.mediainfo.product);
         });
@@ -356,35 +385,48 @@
 
             $scope.showsecond =false;
             $scope.showthird =false;
+            $scope.show_menu_msg =false;
             $scope.u_id = localStorage.getItem("u_id");
             $rootScope.setid = localStorage.getItem("member_id_token");
             console.log($scope.showsecond);
-            $scope.websites = ['Home', 'Application', 'wall'];
+            
 
-            $scope.addTo = function(array, template) {
-                    array.push(template);
-            };
-
-            $http.get(appConfig.apiBaseURL+"/memberships/",{
+            $http.get(appConfig.apiBaseURL+"/tech_info/"+$scope.u_id,{
             headers: {'x-api-key': $rootScope.setid,
                         'Content-Type':'application/json',
                      }
-        })
-        .then(function(response) {
-               $scope.menu = response.data.data.wise_template;
-               console.log("$scope.mediainfo"+$scope.menu);
-        });
-
-        $http.get(appConfig.apiBaseURL+"/tech_info/"+$scope.u_id,{
-            headers: {'x-api-key': $rootScope.setid,
-                        'Content-Type':'application/json',
-                     }
-        })
+            })
             .then(function(response) {
                $scope.techinfo = response.data.data;
                console.log(response);
                console.log("sitetitle"+$scope.techinfo.site_description);
             });
+
+            $scope.websites = ['Home', 'Application', 'Contact Us'];
+
+            $http.get(appConfig.apiBaseURL+"/memberships/",{
+            headers: {'x-api-key': $rootScope.setid,
+                        'Content-Type':'application/json',
+                     }
+                })
+            .then(function(response) {
+               $scope.websites = response.data.data.wise_template.menus;
+               console.log("membership get for menus"+$scope.menu);
+            });
+
+            $scope.count= $scope.websites.length;
+            $scope.msg="";
+            $scope.addTo = function(array, template) {
+                if($scope.count < 5){
+                    console.log($scope.count);
+                    array.push(template);
+                    $scope.count++;
+                }
+                else{
+                    console.log("menu else"+$scope.count);
+                    $scope.show_menu_msg =true;
+                }
+            };
 
             $scope.sitedeals = function(sites){
             // $rootScope.media_dummy= angular.copy($scope.items);
@@ -421,19 +463,34 @@
             $scope.payInfo =false;
             $scope.display = false;
             $scope.personalVisible = true;
+            $scope.loading = true;
             $scope.seen = "blur";
             var token;
 
-            $http.get(appConfig.apiBaseURL+"/personal_detail/"+$scope.u_id,{
+             //To get template details
+            $http.get(appConfig.apiBaseURL+"/templates",{
             headers: {'x-api-key': $rootScope.setid,
                         'Content-Type':'application/json',
-                     }
-        })
+                }
+            })
             .then(function(response) {
-               $scope.personal = response.data.data;
-               console.log(response);
-               console.log("personal"+$scope.personal.email);
+                // $scope.personal = response.data.data.admin.emai;
+                $scope.loading = false;
+                $scope.templates = response.data.data.templates;
+                $http.get(appConfig.apiBaseURL+"/personal_detail/"+$scope.u_id,{
+                headers: {'x-api-key': $rootScope.setid,
+                        'Content-Type':'application/json',
+                     }
+                })
+                .then(function(response) {
+                    $scope.personal = response.data.data;
+                    console.log(response);
+                    console.log("personal"+$scope.personal.email);               
+                });
+                console.log("personal"+response.data.data.admin.company_name);
             });
+
+              
 
            // clicking 1st next button 
             $scope.showBill = function (personal) {
@@ -465,7 +522,7 @@
                 if($scope.billForm.$valid){
                     $scope.seen = "dark";
                     $scope.billVisible = false;
-                    $scope.payInfo = true;
+                    // $scope.payInfo = true;
                     $scope.editBill = true;
 
                     $scope.master = {
@@ -483,8 +540,11 @@
                           'Content-Type':'application/json',
                          }
                         })
-            .then(function(response) {
-               console.log("put response"+response);
+                    .then(function(response) {
+                    console.log("put response"+response);
+                        //calling api for redirect a thing
+                        window.location = "/api/wise/thank_you";
+
             });
                 }
             }
@@ -504,11 +564,25 @@
                 $scope.changeClass = function () {
                     $scope.display = true;
                 }
-                $scope.changeTemplate = function (template) {
+                $scope.changeTemplate = function (template, template_id) {
                     $scope.display = false;
                     $rootScope.settemp = template;
                     token = $rootScope.settemp;
                     localStorage.setItem("token", token);
+
+                    $scope.change_temp = {
+                        wise_template_id: template_id,
+                    };
+
+                    $http.put(appConfig.apiBaseURL+"/memberships",{ "wise": $scope.change_temp },
+                    {
+                        headers: {'x-api-key': $rootScope.setid,
+                          'Content-Type':'application/json',
+                        }
+                    })
+                    .then(function(response) { 
+                        // code
+                    });
                 }
             }
 

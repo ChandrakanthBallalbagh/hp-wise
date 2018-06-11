@@ -6,18 +6,19 @@
 	<div class="template-selected">
 			<span class="place-left">Your Selection</span>
 			<span class="place-right"><button ng-click="changeClass()">Delete</button><i class="fa fa-trash fa-w-18 fa-fw fa-lg"></i></span>
-
 	</div>
 	<div class="template-list">
-		<div class="template-choosen" ng-class="{BorderDefault:settemp == 'templateA'}" ng-show="(display==true || settemp=='templateA')" ng-click="changeTemplate('templateA')">
-               <img class="temp-pic" src="./images/template1-selected.png" align="center">
+		<div ng-repeat="template in templates">
+		<div class="template-choosen" ng-class="{BorderDefault:settemp == template.name}" ng-show="(display==true || settemp == template.name)" ng-click="changeTemplate(template.name, template.id)">
+               <img class="temp-pic" src="{{template.template_image}}" align="center">
                <div class="temp-detail">
-               		<div class="temp-name"> templateA</div>
-               		<div class="temp-desc"> Template details loren ipsum loren amet dolor set, consecteur et doloren amisquiat</div>
+               		<div class="temp-name"> {{template.name}}</div>
+               		<div class="temp-desc"> {{template.description}}</div>
                 </div>
                	<div class="temp-price"> $99.90</div>
 		</div>
-		<div class="template-choosen" ng-class="{BorderDefault:settemp == 'templateB'}" ng-show="(display==true  || settemp=='templateB')" ng-click="changeTemplate('templateB')">
+		</div>
+<!-- 		<div class="template-choosen" ng-class="{BorderDefault:settemp == 'templateB'}" ng-show="(display==true  || settemp=='templateB')" ng-click="changeTemplate('templateB')">
                <img class="temp-pic" src="./images/template2-selected.png" align="center">
               <div class="temp-detail">
                		<div class="temp-name"> templateB</div>
@@ -32,8 +33,9 @@
                		<div class="temp-desc"> Template details loren ipsum loren amet dolor set, consecteur et doloren amisquiat</div>
                 </div>
                	<div class="temp-price"> $9.90</div>
-        </div>
+        </div> -->
 	</div>
+	<div class="loader-icon spinner" ng-show="loading"></div>
 	<div class="personal-info">
 		<div class="personal-header">
 			<h2><span class="round-no">1</span>
@@ -58,7 +60,7 @@
 
 		    <div>
 			<label>Email:</label>
-			<input name="email" ng-model="personal.email" required>
+			<input type="email" name="email" ng-model="personal.email" required>
 			<span class="field-error" ng-show="personalForm.email.$touched && personalForm.email.$invalid">The email is required.
 			</span>
 		    </div>
@@ -85,7 +87,7 @@
 
 		    <div class="two-field-bill">
 			<label>Number</label><br>
-			<input name="billNum" ng-model="personal.number" required>
+			<input type="number" name="billNum" ng-model="personal.number" required>
 			<!-- <span class="field-error" ng-show="billForm.billNum.$touched && billForm.billNum.$invalid">Please enter your door number.
 			</span> -->
 		    </div>
