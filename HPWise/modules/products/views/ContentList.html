@@ -99,7 +99,11 @@
                         <label class="label-name">Content title</label>
                     </div>
                     <label class="field">
-                        <input class="asset-content-title asset-field" name="contentName" ng-model="contentName" placeholder="e.g. Create a Wallcovering" required >
+                        <!-- <input class="asset-content-title asset-field" name="contentName" ng-model="contentName" placeholder="e.g. Create a Wallcovering" required > -->
+                        <select class="asset-content-title asset-field" name="" ng-model="pro_selected" ng-change="getDescription(pro_selected)">
+                            <option ng-selected="true">Select a product</option>
+                            <option ng-repeat="product in selectproduct" ng-if="product.enabled" value="{{product.id}}">{{product.product_name}}</option>
+                        </select>
                     </label>
                 </div>
                 <div class="section-block block3">
@@ -117,14 +121,17 @@
                     <label class="field select-from-computer">
                         <div class="file-text">
                             Select from computer
-                            <input type="file" class="hide_file" name="fileupload" ng-modal="fileupload">
+                            <!-- <input type="file" class="hide_file" name="fileupload" ng-modal="fileupload" ng-model-instant id="fileToUpload"> -->
+                            <input type="file" ng-click="$event = $event" class="hide_file" name="fileupload" ng-model="display" onchange="angular.element(this).scope().upload(event)" accept="image/png, image/jpeg, image/gif" />
                         </div>
-                    </label><span>( no image)</span>
+                    </label>
+                   <!--  <span ng-repeat='img in images'>
+                        <img ng-src="{{img}}" alt="Generic placeholder thumbnail" style="max-height:100px;" class="thumbnail"/></span> -->
                 </div>
-            <div class="content-increment">
-                    <button class="add-section-btn" ng-modal="a" name="a">+ Add Another Content Block</button>
+                <div class="content-increment">
+                    <button class="add-section-btn" ng-click="changeDescription(pro_selected,contentDesc)" name="a"> + Add Another Content Block</button>
+                </div>
             </div>
-        </div>
         
         <div class="asset-bg"><img src="./images/asset-screen1.png" class="img-responsive hidden-xs" alt="">
         </div>

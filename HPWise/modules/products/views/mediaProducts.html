@@ -70,7 +70,7 @@
                             <span ng-model="x.background_imagery" ng-init="x.background_imagery='n/a'"> n/a</span>
                         </div>
                         <div ng-switch-default>
-                        <select  name="" ng-model="x.background_imagery" ng-disabled="contentForm.$invalid" ng-change="mediaChange(x,x.background_imagery,x.objects_imagery)">
+                        <select class="selectimage" name="" ng-model="x.background_imagery" ng-disabled="contentForm.$invalid" ng-change="mediaChange(x,x.background_imagery,x.objects_imagery)">
                             <option ng-selected="true">Select an option</option>
                             <option class="select" ng-repeat="option in optionlist">{{option}}</option>
                             </select>
@@ -79,7 +79,7 @@
                     </td>
         
                     <td>
-                        <select  name="" ng-model="x.objects_imagery" ng-disabled="contentForm.$invalid" ng-change="mediaChange(x,x.background_imagery,x.objects_imagery)">
+                        <select class="selectimage" name="" ng-model="x.objects_imagery" ng-disabled="contentForm.$invalid" ng-change="mediaChange(x,x.background_imagery,x.objects_imagery)">
                             <option ng-selected="true">Select an option</option>
                         	<option ng-repeat="option in optionlist">{{option}}</option>
                         </select>

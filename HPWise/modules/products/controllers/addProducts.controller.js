@@ -32,6 +32,7 @@
             $rootScope.setid = localStorage.getItem("member_id_token");
             $rootScope.loginuser = localStorage.getItem("username");
             console.log("template name"+token);
+            console.log("Avatat url"+$rootScope.avatar);
 
             $http.get(appConfig.apiBaseURL+"/templates",{
             headers: {'x-api-key': $rootScope.setid,
@@ -382,8 +383,9 @@
 
     contentController.$inject = ['productServices','$rootScope','$routeParams','$scope','$http','appConfig'];
         function contentController(productServices,$rootScope,$routeParams,$scope,$http,appConfig) {
-
+            var proi;
             $scope.showsecond =false;
+            $scope.selectproduct;
             $scope.showthird =false;
             $scope.show_menu_msg =false;
             $scope.u_id = localStorage.getItem("u_id");
@@ -414,6 +416,56 @@
                console.log("membership get for menus"+$scope.menu);
             });
 
+            $http.get(appConfig.apiBaseURL+"/"+$scope.u_id+"/products",{
+            headers: {'x-api-key': $rootScope.setid,
+                        'Content-Type':'application/json',
+                     }
+            })
+            .then(function(response) {
+               $scope.selectproduct = response.data.data;
+               console.log("get array products"+$scope.selectproduct);
+               console.log("sitetitle"+$scope.selectproduct.product_description);
+            });
+
+            $scope.getDescription = function(product_id){
+
+                for(proi=0;proi<=$scope.selectproduct.length;proi++){
+                    if($scope.selectproduct[proi].enabled == true)
+                        if($scope.selectproduct[proi].id == product_id){
+                                $scope.contentDesc = $scope.selectproduct[proi].product_description;
+                        }
+                }
+                // alert($scope.selectproduct.length);
+                // alert($scope.selectproduct[1].product_name);
+            }
+
+            // $scope.name = "Select Files to Upload";
+            // var i;
+            // $scope.images = [];
+            // $scope.display = $scope.images[$scope.images.length - 1];
+            // $scope.setImage = function (ix) {
+            // $scope.display = $scope.images[ix];
+            // }
+            // $scope.clearAll = function () {
+            //     $scope.display = '';
+            //     $scope.images = [];
+            // }
+            
+            //   $scope.upload = function (obj) {
+            // var elem = obj.target || obj.srcElement;
+            // for (i = 0; i < elem.files.length; i++) {
+            // var file = elem.files[i];
+            // var reader = new FileReader();
+
+            // reader.onload = function (e) {
+            //     $scope.images.push(e.target.result);
+            //     $scope.display = e.target.result;
+            //     $scope.$apply();
+            // }
+            // reader.readAsDataURL(file);
+            // }
+            // }
+            
             $scope.count= $scope.websites.length;
             $scope.msg="";
             $scope.addTo = function(array, template) {
@@ -448,6 +500,27 @@
             .then(function(response) {
                console.log("put response"+response);
             });
+        }
+
+         $scope.changeDescription = function(pro_id,desc){
+            // $rootScope.media_dummy= angular.copy($scope.items);
+            // console.log($rootScope.media_dummy);
+
+            $scope.master = {
+                    description: desc,
+            };
+
+            $http.put(appConfig.apiBaseURL+"/products/"+pro_id,{ "wise_product": $scope.master },
+                {
+                headers: {'x-api-key': $rootScope.setid,
+                          'Content-Type':'application/json',
+                         }
+                })
+            .then(function(response) {
+               console.log("put response"+response);
+            });
+            $scope.pro_selected = "Select a product";
+            $scope.contentDesc = "";
         }
            
     }

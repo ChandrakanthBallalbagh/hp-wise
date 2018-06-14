@@ -34,7 +34,7 @@ body {
     background-color: #fdfdfd;
 }
 .header-sec-2{
-    background-color: rgb(35, 167, 245, 1);
+    background-color: rgba(35, 167, 245, 1);
     padding: 6px;
 }
 .template-choose{
@@ -89,7 +89,7 @@ body {
     height: 100%;
 }
 .page-title {
-    color: rgb(35, 167, 245, 1);
+    color: rgba(35, 167, 245, 1);
     font-size: 38px;
     white-space: nowrap;
     padding: 24px 0px;
@@ -100,7 +100,7 @@ body {
     cursor: pointer;
 }
 .page-subtitle{
-    color: rgb(68, 73, 76, 1);
+    color: rgba(68, 73, 76, 1);
     font-size: 22px;
     font-family: "HPSimplified";
     vertical-align: middle;
@@ -387,11 +387,11 @@ ol.etapier li {
     position: absolute;
     top: 0px;
     left: 50%;
-    color: rgb(35, 167, 245, 1);
+    color: rgba(35, 167, 245, 1);
 }
 /* CHANGE COLOR HERE */ 
 ol.etapier li.done:before {
-    border-color: rgb(35, 167, 245, 1);
+    border-color: rgba(35, 167, 245, 1);
     width: 40px;
     height: 40px;
     bottom: -21px;
@@ -445,7 +445,7 @@ ol.etapier li.done:before {
     background-color: #fff;
 }
 ol.etapier li.done.complete:before {
-    background-color: rgb(35, 167, 245, 1);
+    background-color: rgba(35, 167, 245, 1);
 }
 ol.etapier li.complete span{
     color: white;
@@ -615,14 +615,14 @@ input[type=checkbox]:checked:before {
     font-size: 14px;
     color: #fff;
     background: none;
-    background-color: rgb(35, 167, 245, 1); 
+    background-color: rgba(35, 167, 245, 1); 
     padding: 45px 0; 
 }
 .true .prod-select
 /* .integrated:hover .prod-select*/{
     background: url(../images/wallcovering-icon.png) no-repeat;
     font-size: 0;
-    background-color: rgb(60, 145, 195);
+    background-color: rgba(60, 145, 195);
     padding: 55px 0;
 }
 .add-products{
@@ -700,7 +700,7 @@ input[type=checkbox]:checked:before {
 }
 .section-title{
     font-weight: 600;
-    color: rgb(35, 167, 245, 1);
+    color: rgba(35, 167, 245, 1);
 }
 .section-title.normal{
     font-weight: normal;
@@ -773,6 +773,16 @@ button[disabled] {
 .menu-name-field{
     margin-left: 40px;
 }
+.asset-content-title{
+    border: 1px solid #797979;
+    width: 100%;
+    padding: 3px 0;
+}
+.selectimage{
+    height: 28px;
+    font-size: 14px;
+    outline: none;
+}
 .label-field{
     width: 100px;
     display: inline-block;
@@ -836,7 +846,7 @@ label.field{
     border: 1px solid #fff;
 }
 .template-choosen.templateA, .template-choosen.templateB,.template-choosen.templateC{
-    border-right: 2px solid rgb(35, 167, 245, 1);
+    border-right: 2px solid rgba(35, 167, 245, 1);
 }
 .temp-detail, .temp-price{
     display: inline-block;
@@ -866,14 +876,14 @@ label.field{
     padding: 0 30px;
 }
 .template-choosen:hover{
-    border: 1px solid rgb(35, 167, 245, 1);
+    border: 1px solid rgba(35, 167, 245, 1);
 }
 .BorderDefault{
-    border: 1px solid rgb(35, 167, 245, 1);
-    border-right: 2px solid rgb(35, 167, 245, 1);
+    border: 1px solid rgba(35, 167, 245, 1);
+    border-right: 2px solid rgba(35, 167, 245, 1);
 }
 .BorderDefault:hover{
-    border-right: 2px solid rgb(35, 167, 245, 1);
+    border-right: 2px solid rgba(35, 167, 245, 1);
 }
 .place-left{
     float: left;
@@ -913,10 +923,10 @@ label.field{
     margin-left: 86px;
 }
 .round-no{
-    border: 1px solid rgb(35, 167, 245, 1);
+    border: 1px solid rgba(35, 167, 245, 1);
     border-radius: 57px;
     font-size: 35px;
-    background: rgb(35, 167, 245, 1);
+    background: rgba(35, 167, 245, 1);
     padding: 10px 20px;
 }
 .personal-info,.billing-info{
@@ -983,10 +993,11 @@ label.field{
 .direction{
     font-size: 20px;
     color: #fff;
-    background-color: rgb(35, 167, 245, 1);
+    background-color: rgba(35, 167, 245, 1);
     padding: 10px 30px;
     text-align: center;
     margin-top: 10px;
+    cursor: pointer;
 }
 
 .direction:hover{
@@ -1017,10 +1028,10 @@ label.field{
 .spinner{
     border: 15px solid #f3f3f3;
     border-radius: 50%;
-    border-top: 15px solid blue;
-    border-right: 15px solid green;
-    border-bottom: 15px solid red;
-    border-left: 15px solid pink;
+    border-top: 15px solid #fff;
+    border-right: 15px solid #088eec;
+    border-bottom: 15px solid #fff;
+    border-left: 15px solid #088eec;
     width: 20px;
     height: 20px;
     -webkit-animation: spin 2s linear infinite;

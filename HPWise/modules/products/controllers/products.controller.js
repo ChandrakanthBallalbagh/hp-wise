@@ -139,7 +139,7 @@
                // $scope.result = response.data.result;
                //changeswise : changed comment in hpwise product.controller
                localStorage.setItem("username", data.data.admin_email);
-               // $scope.userid = response.data.data.id;
+               $rootScope.avatar = data.data.store_icon;
                var userid = data.data.id;
                localStorage.setItem("u_id", userid);
                console.log("user"+data.data.admin_email);
